@@ -1,11 +1,11 @@
 ## SoftetherVPN:Build a LAN-to-LAN VPN (Using L3 IP Routing)  
 
-## TOPOLOGY
+## Model
 
 ## Network Details
 
 | Roles	               | Network         | Gateway        |
-|--------------------- |:---------------:|---------------:| 	
+|:-------------------: |:---------------:|:--------------:| 	
 | VPN Client           | 192.168.99.0/24 | 192.168.99.254 |
 | VietNam Production   | 10.199.0.0/24   | 10.199.0.249   |
 | VietNam Sanbox       | 10.198.0.0/24   | 10.198.0.249   |
@@ -13,9 +13,10 @@
 | Singapore Production | 10.200.0.0/24   | 10.200.0.249   |
 
 ## Function
-Host (10.199.0.3) -> VPN SERVER, DHCP SERVER (192.168.99.0/24)
-Host (10.200.0.3) -> VPN BRIDGE
-
+```
+Host (10.199.0.3): VPN Server, DHCP Server for network 192.168.99.0/24
+Host (10.200.0.3): VPN Bridge
+```
 ## Routing
 
 ### VPN Client (dnsmasq)
@@ -148,6 +149,43 @@ Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 192.168.32.0    0.0.0.0         255.255.255.0   U     0      0        0 eth0
 192.168.99.0    0.0.0.0         255.255.255.0   U     0      0        0 vpn_vpn
 
+```
+
+## Ping
+```
+root@epson 10:22:29 ~ 
+$ ping 10.199.0.6
+PING 10.199.0.6 (10.199.0.6) 56(84) bytes of data.
+64 bytes from 10.199.0.6: icmp_seq=1 ttl=63 time=14.1 ms
+64 bytes from 10.199.0.6: icmp_seq=2 ttl=63 time=4.77 ms
+64 bytes from 10.199.0.6: icmp_seq=3 ttl=63 time=5.11 ms
+64 bytes from 10.199.0.6: icmp_seq=4 ttl=63 time=5.45 ms
+64 bytes from 10.199.0.6: icmp_seq=5 ttl=63 time=5.54 ms
+64 bytes from 10.199.0.6: icmp_seq=6 ttl=63 time=5.03 ms
+64 bytes from 10.199.0.6: icmp_seq=7 ttl=63 time=4.56 ms
+64 bytes from 10.199.0.6: icmp_seq=8 ttl=63 time=4.23 ms
+^C
+--- 10.199.0.6 ping statistics ---
+8 packets transmitted, 8 received, 0% packet loss, time 7009ms
+rtt min/avg/max/mdev = 4.234/6.095/14.053/3.035 ms
+
+
+root@epson 10:22:41 ~ 
+$ ping 10.200.0.2
+PING 10.200.0.2 (10.200.0.2) 56(84) bytes of data.
+64 bytes from 10.200.0.2: icmp_seq=1 ttl=63 time=84.7 ms
+64 bytes from 10.200.0.2: icmp_seq=2 ttl=63 time=46.6 ms
+64 bytes from 10.200.0.2: icmp_seq=3 ttl=63 time=43.9 ms
+64 bytes from 10.200.0.2: icmp_seq=4 ttl=63 time=44.4 ms
+64 bytes from 10.200.0.2: icmp_seq=5 ttl=63 time=44.0 ms
+64 bytes from 10.200.0.2: icmp_seq=6 ttl=63 time=44.4 ms
+64 bytes from 10.200.0.2: icmp_seq=7 ttl=63 time=44.1 ms
+64 bytes from 10.200.0.2: icmp_seq=8 ttl=63 time=44.0 ms
+64 bytes from 10.200.0.2: icmp_seq=9 ttl=63 time=46.3 ms
+^C
+--- 10.200.0.2 ping statistics ---
+9 packets transmitted, 9 received, 0% packet loss, time 8010ms
+rtt min/avg/max/mdev = 43.883/49.156/84.716/12.610 ms
 
 ```
 
